@@ -104,7 +104,7 @@ El archivo `app.py` corresponde a la interfaz del sistema, donde el usuario pued
 
 ## Funciones principales
 
-### `fashion_preprocessing.py`
+### `datos_preprocessing.py`
 
 - `load_fashion_mnist()`
 - `normalize_images(x_train, x_test)`
