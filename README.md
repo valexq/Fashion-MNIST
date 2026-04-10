@@ -60,7 +60,7 @@ python -m pip install -r requirements.txt
 
 ### 1. Preprocesamiento
 
-El archivo `fashion_preprocessing.py` se encarga de:
+El archivo `datos_preprocessing.py` se encarga de:
 
 - Cargar el dataset Fashion MNIST desde TensorFlow.
 - Normalizar las imágenes a valores entre 0 y 1.
