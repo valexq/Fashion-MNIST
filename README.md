@@ -40,7 +40,9 @@ Fashion-MNIST/
 │
 ├── notebooks/
 │   └── eda_preprocesamiento.ipynb
-│
+│├── models/
+│   └──mlp_model.h5
+│   ├──cnn_model.h5
 ├── requirements.txt
 └── README.md
 ```
@@ -80,6 +82,7 @@ Este script:
 - Carga los datos preprocesados.
 - Entrena una red neuronal densa.
 - Evalúa su desempeño.
+- Guardar modelo en models/mlp_model.h5
 
 ### 3. Entrenamiento del modelo CNN
 
@@ -93,6 +96,7 @@ Este script:
 - Carga los datos preprocesados.
 - Entrena una red convolucional.
 - Evalúa su desempeño.
+- Guardar modelo en models/cnn_model.h5
 
 ### 4. Predicción con imágenes reales
 
@@ -104,7 +108,7 @@ El archivo `app.py` corresponde a la interfaz del sistema, donde el usuario pued
 
 ## Funciones principales
 
-### `fashion_preprocessing.py`
+### `datos_preprocessing.py`
 
 - `load_fashion_mnist()`
 - `normalize_images(x_train, x_test)`
