@@ -32,7 +32,6 @@ Las clases utilizadas son:
 Fashion-MNIST/
 │
 ├── src/
-│   ├── __init__.py
 │   ├── datos_preprocessing.py
 │   ├── train_mlp.py
 │   ├── train_cnn.py
@@ -44,8 +43,9 @@ Fashion-MNIST/
 │   └── cnn_model.h5
 │
 ├── notebooks/
-│   ├── 01_eda_preprocesamiento.ipynb
-│   └── 02_prueba_entrenamiento_mlp.ipynb
+│   ├── eda_preprocesamiento.ipynb
+│   └── test_training_mlp.ipynb
+│   └── test_training_cnn.ipynb
 │
 ├── requirements.txt
 └── README.md
@@ -79,7 +79,7 @@ El archivo `datos_preprocessing.py` se encarga de:
 Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
 
 ```bash
-notebooks/02_prueba_entrenamiento_mlp.ipynb
+notebooks/test_training_mlp.ipynb
 ```
 
 Este notebook permite:
@@ -99,7 +99,7 @@ Su objetivo es validar que el flujo de preprocesamiento y entrenamiento funciona
 Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
 
 ```bash
-notebooks/02_prueba_entrenamiento_cnn.ipynb
+notebooks/test_training_cnn.ipynb
 ```
 
 Este notebook permite:
