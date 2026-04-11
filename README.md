@@ -32,17 +32,21 @@ Las clases utilizadas son:
 Fashion-MNIST/
 │
 ├── src/
+│   ├── __init__.py
 │   ├── datos_preprocessing.py
 │   ├── train_mlp.py
 │   ├── train_cnn.py
 │   ├── predict.py
 │   └── app.py
 │
+├── models/
+│   ├── mlp_model.h5
+│   └── cnn_model.h5
+│
 ├── notebooks/
-│   └── eda_preprocesamiento.ipynb
-│├── models/
-│   └──mlp_model.h5
-│   ├──cnn_model.h5
+│   ├── 01_eda_preprocesamiento.ipynb
+│   └── 02_prueba_entrenamiento_mlp.ipynb
+│
 ├── requirements.txt
 └── README.md
 ```
@@ -70,7 +74,47 @@ El archivo `datos_preprocessing.py` se encarga de:
 - Preparar los datos para CNN en formato `(N, 28, 28, 1)`.
 - Preprocesar imágenes reales tomadas desde el dispositivo.
 
-### 2. Entrenamiento del modelo MLP
+### 2. Notebook de prueba para entrenamiento MLP
+
+Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
+
+```bash
+notebooks/02_prueba_entrenamiento_mlp.ipynb
+```
+
+Este notebook permite:
+
+- Importar el módulo de preprocesamiento desde `src/`.
+- Cargar los datos ya preparados para MLP.
+- Verificar las dimensiones de entrada y salida.
+- Definir y entrenar una red neuronal básica.
+- Evaluar el modelo en el conjunto de prueba.
+- Visualizar curvas de pérdida y exactitud.
+- Realizar predicciones rápidas sobre ejemplos del conjunto de prueba.
+
+Su objetivo es validar que el flujo de preprocesamiento y entrenamiento funciona correctamente antes de consolidarlo en `train_mlp.py`.
+
+### 3. Notebook de prueba para entrenamiento MLP
+
+Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
+
+```bash
+notebooks/02_prueba_entrenamiento_cnn.ipynb
+```
+
+Este notebook permite:
+
+- Importar el módulo de preprocesamiento desde `src/`.
+- Cargar los datos ya preparados para CNN.
+- Verificar las dimensiones de entrada y salida.
+- Definir y entrenar una red neuronal básica.
+- Evaluar el modelo en el conjunto de prueba.
+- Visualizar curvas de pérdida y exactitud.
+- Realizar predicciones rápidas sobre ejemplos del conjunto de prueba.
+
+Su objetivo es validar que el flujo de preprocesamiento y entrenamiento funciona correctamente antes de consolidarlo en `train_cnn.py`.
+
+### 4. Entrenamiento del modelo MLP
 
 Ejecutar:
 
@@ -82,9 +126,9 @@ Este script:
 - Carga los datos preprocesados.
 - Entrena una red neuronal densa.
 - Evalúa su desempeño.
-- Guardar modelo en models/mlp_model.h5
+- Guarda el modelo en `models/mlp_model.h5`.
 
-### 3. Entrenamiento del modelo CNN
+### 5. Entrenamiento del modelo CNN
 
 Ejecutar:
 
@@ -96,13 +140,13 @@ Este script:
 - Carga los datos preprocesados.
 - Entrena una red convolucional.
 - Evalúa su desempeño.
-- Guardar modelo en models/cnn_model.h5
+- Guarda el modelo en `models/cnn_model.h5`.
 
-### 4. Predicción con imágenes reales
+### 6. Predicción con imágenes reales
 
 El archivo `predict.py` permite cargar un modelo ya entrenado y realizar predicciones sobre imágenes reales.
 
-### 5. Interfaz del sistema
+### 7. Interfaz del sistema
 
 El archivo `app.py` corresponde a la interfaz del sistema, donde el usuario puede cargar una imagen y seleccionar el modelo con el cual desea hacer la clasificación.
 
@@ -128,10 +172,11 @@ Para imágenes reales se recomienda:
 - Mostrar una sola prenda por imagen.
 - Probar también con `invert=True` si el contraste no coincide con el dataset.
 
-## Entregables
+## Entregables 
 
 - Código fuente del sistema.
 - Notebook de análisis exploratorio.
+- Notebook de prueba para entrenamiento del MLP.
 - Modelos entrenados.
 - Informe final.
 - Video de presentación.
