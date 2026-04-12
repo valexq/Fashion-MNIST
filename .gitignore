@@ -1,14 +1,24 @@
 .venv/
+venv/
 .idea/
 __pycache__/
 .ipynb_checkpoints/
 
+# Dataset (se descarga automáticamente via TensorFlow)
 data/
-models/
 
+# Modelos entrenados (archivos grandes, se generan al ejecutar train_*.py)
 *.h5
+*.keras
+
+# Archivos temporales de la app
+src/_tmp_upload.png
+
+# Datos externos
 *.csv
 *.zip
-*.jpg
-*.jpeg
-*.png
+
+# Imágenes de prueba (opcional, quitar si quieres versionarlas)
+# *.jpg
+# *.jpeg
+# *.png

@@ -7,3 +7,4 @@ jupyter
 opencv-python
 pillow
 seaborn
+gradio

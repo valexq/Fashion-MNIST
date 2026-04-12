@@ -1,182 +1,256 @@
-# Sistema de reconocimiento de prendas de vestir con Fashion MNIST
+# Sistema de Reconocimiento de Prendas de Vestir — Fashion MNIST
 
-Este proyecto implementa un sistema de clasificación de prendas de vestir usando el dataset **Fashion MNIST**. Se desarrollan dos enfoques de aprendizaje automático:
+[![Python](https://img.shields.io/badge/Python-3.12-blue)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)](https://www.tensorflow.org/)
 
-- Una red neuronal básica (**MLP**).
-- Una red neuronal convolucional (**CNN**).
+Sistema de clasificación de prendas de vestir usando el dataset **Fashion MNIST**. Implementa y compara dos enfoques de Deep Learning:
 
-Además, el sistema permite probar imágenes reales tomadas desde el dispositivo del usuario, aplicando un preprocesamiento compatible con el formato del dataset.
+- **MLP (Red Neuronal Densa):** arquitectura clásica totalmente conectada.
+- **CNN (Red Neuronal Convolucional):** arquitectura profunda con capas convolucionales.
 
-## Objetivo
+El sistema incluye además una **interfaz web** para clasificar imágenes reales tomadas con el dispositivo del usuario.
 
-Construir un sistema capaz de clasificar imágenes de prendas en una de las 10 clases de Fashion MNIST y comparar el desempeño entre un modelo MLP y un modelo CNN.
+---
 
-## Clases del dataset
+## Clases del Dataset
 
-Las clases utilizadas son:
+| Índice | Clase | Descripción |
+|--------|-------|-------------|
+| 0 | T-shirt/top | Camiseta / top |
+| 1 | Trouser | Pantalón |
+| 2 | Pullover | Suéter pullover |
+| 3 | Dress | Vestido |
+| 4 | Coat | Abrigo |
+| 5 | Sandal | Sandalia |
+| 6 | Shirt | Camisa |
+| 7 | Sneaker | Zapatilla deportiva |
+| 8 | Bag | Bolso / bolsa |
+| 9 | Ankle boot | Botín |
 
-1. T-shirt/top
-2. Trouser
-3. Pullover
-4. Dress
-5. Coat
-6. Sandal
-7. Shirt
-8. Sneaker
-9. Bag
-10. Ankle boot
+---
 
-## Estructura del proyecto
+## Estructura del Proyecto
 
-```bash
+```
 Fashion-MNIST/
 │
 ├── src/
-│   ├── datos_preprocessing.py
-│   ├── train_mlp.py
-│   ├── train_cnn.py
-│   ├── predict.py
-│   └── app.py
+│   ├── datos_processing.py     # Carga, normalización y preprocesamiento
+│   ├── train_mlp.py            # Entrenamiento de la red densa (MLP)
+│   ├── train_cnn.py            # Entrenamiento de la red convolucional (CNN)
+│   ├── predict.py              # Predicción CLI sobre imágenes reales
+│   └── app.py                  # Interfaz web (Gradio)
 │
 ├── models/
-│   ├── mlp_model.h5
-│   └── cnn_model.h5
+│   ├── mlp_model.h5            # Modelo MLP entrenado (generado al correr train_mlp.py)
+│   └── cnn_model.h5            # Modelo CNN entrenado (generado al correr train_cnn.py)
 │
 ├── notebooks/
-│   ├── eda_preprocesamiento.ipynb
-│   └── test_training_mlp.ipynb
-│   └── test_training_cnn.ipynb
+│   ├── eda_preprocesamiento.ipynb     # Análisis exploratorio del dataset
+│   ├── test_training_mlp.ipynb        # Notebook de experimentación MLP
+│   └── test_training_cnn.ipynb        # Notebook de experimentación CNN
 │
 ├── requirements.txt
 └── README.md
 ```
 
-## Instalación
+---
 
-1. Crear y activar un entorno virtual.
-2. Instalar las dependencias del proyecto:
+## Instalación y Configuración
+
+### Requisitos
+
+- **Python 3.10 – 3.12** (recomendado: Python 3.12)
+  > ⚠️ TensorFlow no es compatible con Python 3.13+. Usa `python --version` para verificar.
+
+### Pasos
 
 ```bash
-python -m pip install -r requirements.txt
+# 1. Clonar el repositorio
+git clone https://github.com/valexq/Fashion-MNIST.git
+cd Fashion-MNIST
+
+# 2. Crear entorno virtual (recomendado)
+python -m venv venv
+
+# Activar en Windows:
+venv\Scripts\activate
+
+# Activar en Linux/macOS:
+source venv/bin/activate
+
+# 3. Instalar dependencias
+pip install -r requirements.txt
 ```
 
-> Nota: para instalar TensorFlow se recomienda usar **Python 3.12**, ya que versiones más recientes como Python 3.14 pueden no ser compatibles.
+---
 
-## Flujo del sistema
+## Flujo de Ejecución
 
-### 1. Preprocesamiento
+### Paso 1 — Análisis Exploratorio (opcional)
 
-El archivo `datos_preprocessing.py` se encarga de:
-
-- Cargar el dataset Fashion MNIST desde TensorFlow.
-- Normalizar las imágenes a valores entre 0 y 1.
-- Preparar los datos para MLP en formato `(N, 784)`.
-- Preparar los datos para CNN en formato `(N, 28, 28, 1)`.
-- Preprocesar imágenes reales tomadas desde el dispositivo.
-
-### 2. Notebook de prueba para entrenamiento MLP
-
-Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
+Abre el notebook de EDA para explorar el dataset:
 
 ```bash
-notebooks/test_training_mlp.ipynb
+jupyter notebook notebooks/eda_preprocesamiento.ipynb
 ```
 
-Este notebook permite:
-
-- Importar el módulo de preprocesamiento desde `src/`.
-- Cargar los datos ya preparados para MLP.
-- Verificar las dimensiones de entrada y salida.
-- Definir y entrenar una red neuronal básica.
-- Evaluar el modelo en el conjunto de prueba.
-- Visualizar curvas de pérdida y exactitud.
-- Realizar predicciones rápidas sobre ejemplos del conjunto de prueba.
-
-Su objetivo es validar que el flujo de preprocesamiento y entrenamiento funciona correctamente antes de consolidarlo en `train_mlp.py`.
-
-### 3. Notebook de prueba para entrenamiento MLP
-
-Antes de pasar al script final, se recomienda probar el entrenamiento del modelo MLP en el notebook:
+### Paso 2 — Explorar y entrenar el modelo MLP
 
 ```bash
-notebooks/test_training_cnn.ipynb
-```
+# Opción A: Notebook interactivo (recomendado para exploración)
+jupyter notebook notebooks/test_training_mlp.ipynb
 
-Este notebook permite:
-
-- Importar el módulo de preprocesamiento desde `src/`.
-- Cargar los datos ya preparados para CNN.
-- Verificar las dimensiones de entrada y salida.
-- Definir y entrenar una red neuronal básica.
-- Evaluar el modelo en el conjunto de prueba.
-- Visualizar curvas de pérdida y exactitud.
-- Realizar predicciones rápidas sobre ejemplos del conjunto de prueba.
-
-Su objetivo es validar que el flujo de preprocesamiento y entrenamiento funciona correctamente antes de consolidarlo en `train_cnn.py`.
-
-### 4. Entrenamiento del modelo MLP
-
-Ejecutar:
-
-```bash
+# Opción B: Script directo
 python src/train_mlp.py
 ```
 
-Este script:
-- Carga los datos preprocesados.
-- Entrena una red neuronal densa.
-- Evalúa su desempeño.
-- Guarda el modelo en `models/mlp_model.h5`.
+El modelo se guardará en `models/mlp_model.h5`.
 
-### 5. Entrenamiento del modelo CNN
+**Resultados esperados MLP:**
+- Accuracy en test: **~88–89%**
+- Arquitectura: `784 → Dense(128) → Dropout(0.2) → Dense(64) → Dense(10)`
 
-Ejecutar:
+### Paso 3 — Explorar y entrenar el modelo CNN
 
 ```bash
+# Opción A: Notebook interactivo
+jupyter notebook notebooks/test_training_cnn.ipynb
+
+# Opción B: Script directo
 python src/train_cnn.py
 ```
 
-Este script:
-- Carga los datos preprocesados.
-- Entrena una red convolucional.
-- Evalúa su desempeño.
-- Guarda el modelo en `models/cnn_model.h5`.
+El modelo se guardará en `models/cnn_model.h5`.
 
-### 6. Predicción con imágenes reales
+**Resultados esperados CNN:**
+- Accuracy en test: **~91–93%**
+- Arquitectura: 2 bloques ConvNet + Clasificador denso
 
-El archivo `predict.py` permite cargar un modelo ya entrenado y realizar predicciones sobre imágenes reales.
+### Paso 4 — Clasificar imágenes reales (CLI)
 
-### 7. Interfaz del sistema
+```bash
+# Con CNN (recomendado, mayor precisión)
+python src/predict.py --image ruta/a/tu/imagen.jpg --model cnn
 
-El archivo `app.py` corresponde a la interfaz del sistema, donde el usuario puede cargar una imagen y seleccionar el modelo con el cual desea hacer la clasificación.
+# Con MLP
+python src/predict.py --image ruta/a/tu/imagen.jpg --model mlp
 
-## Funciones principales
+# Si el fondo de la imagen es oscuro, agrega --invert
+python src/predict.py --image imagen.jpg --model cnn --invert
+```
 
-### `datos_preprocessing.py`
+**Salida esperada:**
+```
+Cargando modelo 'cnn' desde: .../models/cnn_model.h5
 
-- `load_fashion_mnist()`
-- `normalize_images(x_train, x_test)`
-- `prepare_for_mlp(images)`
-- `prepare_for_cnn(images)`
-- `load_and_prepare_all()`
-- `preprocess_real_image(image_path, invert=False)`
-- `prepare_real_image_for_mlp(image_path, invert=False)`
-- `prepare_real_image_for_cnn(image_path, invert=False)`
+=============================================
+  Predicción: Sneaker
+  Confianza:  94.3%
+=============================================
 
-## Pruebas con imágenes reales
+Top-3 clases:
+  1. Sneaker         [████████████████░░░░]  94.3%
+  2. Ankle boot      [█░░░░░░░░░░░░░░░░░░░]   4.1%
+  3. Sandal          [░░░░░░░░░░░░░░░░░░░░]   1.2%
+```
 
-Para imágenes reales se recomienda:
+### Paso 5 — Interfaz Web (Gradio)
 
-- Tomar la foto con buena iluminación.
-- Usar fondo simple.
-- Mostrar una sola prenda por imagen.
-- Probar también con `invert=True` si el contraste no coincide con el dataset.
+```bash
+python src/app.py
+```
 
-## Entregables 
+Abrir en el navegador: **http://localhost:7860**
 
-- Código fuente del sistema.
-- Notebook de análisis exploratorio.
-- Notebook de prueba para entrenamiento del MLP.
-- Modelos entrenados.
-- Informe final.
-- Video de presentación.
+La interfaz permite:
+- 📷 Subir una imagen de prenda
+- 🤖 Elegir el modelo (MLP o CNN)
+- 🔄 Activar inversión de colores si es necesario
+- 📊 Ver las probabilidades por clase
+
+---
+
+## Arquitecturas de los Modelos
+
+### MLP (Red Densa)
+
+```
+Input (784) → Dense(128, ReLU) → Dropout(0.2) → Dense(64, ReLU) → Dense(10, Softmax)
+```
+
+| Parámetro | Valor |
+|-----------|-------|
+| Optimizer | Adam |
+| Loss | sparse_categorical_crossentropy |
+| Batch size | 32 |
+| Max épocas | 10 |
+| EarlyStopping | patience=3, monitor=val_loss |
+
+### CNN (Red Convolucional)
+
+```
+Input (28×28×1)
+→ Conv2D(32) → BatchNorm → Conv2D(32) → MaxPool → Dropout(0.25)
+→ Conv2D(64) → BatchNorm → Conv2D(64) → MaxPool → Dropout(0.25)
+→ Flatten → Dense(256) → BatchNorm → Dropout(0.5) → Dense(10, Softmax)
+```
+
+| Parámetro | Valor |
+|-----------|-------|
+| Optimizer | Adam |
+| Loss | sparse_categorical_crossentropy |
+| Batch size | 64 |
+| Max épocas | 20 |
+| EarlyStopping | patience=3, monitor=val_loss |
+
+---
+
+## Comparativa de Resultados
+
+| Modelo | Accuracy en Test | Parámetros | Tiempo de entrenamiento |
+|--------|-----------------|------------|-------------------------|
+| MLP    | ~88–89%          | ~120 K     | ~1–2 min (CPU) |
+| CNN    | ~91–93%          | ~450 K     | ~5–10 min (CPU) |
+
+> La CNN supera al MLP porque aprovecha la **estructura espacial** de las imágenes (bordes, texturas, formas), algo que la red densa no puede hacer al tratar cada píxel de forma independiente.
+
+---
+
+## Consejos para Imágenes Reales
+
+- ✅ Usa **buena iluminación** (luz natural o artificial uniforme).
+- ✅ Usa **fondo claro** (blanco o gris preferiblemente).
+- ✅ Muestra **una sola prenda** por imagen.
+- ✅ Centra la prenda en el encuadre.
+- ⚙️ Si la predicción es incorrecta, prueba con `--invert` (invierte los colores).
+- ⚙️ La CNN suele ser más robusta ante variaciones de iluminación y ángulo.
+
+---
+
+## Módulo de Preprocesamiento (`datos_processing.py`)
+
+| Función | Descripción |
+|---------|-------------|
+| `load_fashion_mnist()` | Carga el dataset original desde TensorFlow |
+| `normalize_images(x_train, x_test)` | Normaliza píxeles al rango [0, 1] |
+| `prepare_for_mlp(images)` | Reshape a `(N, 784)` para red densa |
+| `prepare_for_cnn(images)` | Reshape a `(N, 28, 28, 1)` para CNN |
+| `load_and_prepare_all()` | Carga + normaliza + prepara todo en un dict |
+| `preprocess_real_image(path, invert)` | Convierte imagen real a formato Fashion MNIST |
+| `prepare_real_image_for_mlp(path, invert)` | Imagen real → formato MLP |
+| `prepare_real_image_for_cnn(path, invert)` | Imagen real → formato CNN |
+
+---
+
+## Entregables del Proyecto
+
+- [x] Código fuente del sistema (`src/`)
+- [x] Notebook de análisis exploratorio (`eda_preprocesamiento.ipynb`)
+- [x] Notebook de prueba MLP (`test_training_mlp.ipynb`)
+- [x] Notebook de prueba CNN (`test_training_cnn.ipynb`)
+- [x] Interfaz web (`app.py`)
+- [x] Script de predicción CLI (`predict.py`)
+- [ ] Modelos entrenados (`models/`) — se generan al ejecutar los scripts
+- [ ] Informe final
+- [ ] Video de presentación
